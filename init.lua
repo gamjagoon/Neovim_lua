@@ -38,6 +38,9 @@ vim.notify = function (msg, log_level, _opts)
 	vim.api.nvim_echo({{msg}}, true, {})
 	end
 end
+-- ============== --
+-- CTAGS REPORTER --
+-- ============== --
 
 -- ========================================================================== --
 -- ==                         PLUGIN CONFIGURATION                         == --
@@ -166,3 +169,9 @@ require'lspconfig'.rust_analyzer.setup{}
 -- highlight
 vim.api.nvim_set_hl(0, "LineNr", {ctermfg=168})
 vim.api.nvim_set_hl(0, "CursorLineNr", {ctermfg=White})
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<space>ff', builtin.find_files, {})
+vim.keymap.set('n', '<space>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<space>fb', builtin.buffers, {})
+vim.keymap.set('n', '<space>fh', builtin.help_tags, {})
