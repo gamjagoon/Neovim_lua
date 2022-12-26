@@ -1,5 +1,3 @@
-#!/bin/bash
-
 LUA_FD="$HOME/.config/nvim/lua"
 LUA_INIT="$HOME/.config/nvim/init.lua"
 
