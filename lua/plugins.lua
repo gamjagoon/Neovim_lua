@@ -76,6 +76,8 @@ return packer.startup(function(use)
 	use {'hrsh7th/cmp-cmdline'}
 	use {'hrsh7th/nvim-cmp'}
 
+  use { "windwp/nvim-autopairs"}
+
   -- Telescope
   use { "nvim-telescope/telescope.nvim"}
 
