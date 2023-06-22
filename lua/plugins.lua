@@ -19,8 +19,16 @@ return require('packer').startup(function(use)
             requires = 'nvim-tree/nvim-web-devicons'
     }
     use {
-      'nvim-telescope/telescope.nvim', tag = '0.1.1',
-      requires = { {'nvim-lua/plenary.nvim'} }
+        'nvim-telescope/telescope.nvim', tag = '0.1.1',
+        requires = {
+            {
+                "nvim-lua/plenary.nvim",
+                "nvim-telescope/telescope-live-grep-args.nvim",
+            }
+        },
+    }
+    use {
+        "windwp/nvim-autopairs",
     }
     use {
       'nvim-tree/nvim-tree.lua',

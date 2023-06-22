@@ -1,35 +1,28 @@
-require('telescope').setup{
-  defaults = {
-    -- Default configuration for telescope goes here:
-    -- config_key = value,
-    mappings = {
-      i = {
-        -- map actions.which_key to <C-h> (default: <C-/>)
-        -- actions.which_key shows the mappings for your picker,
-        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
-        ["<C-h>"] = "which_key"
-      }
-    }
-  },
-  pickers = {
-    -- Default configuration for builtin pickers goes here:
-    -- picker_name = {
-    --   picker_config_key = value,
-    --   ...
-    -- }
-    -- Now the picker_config_key will be applied every time you call this
-    -- builtin picker
-  },
-  extensions = {
-    -- Your extension configuration goes here:
-    -- extension_name = {
-    --   extension_config_key = value,
-    -- }
-    -- please take a look at the readme of the extension you want to configure
-  }
-}
-
+local telescope = require("telescope")
+local lga_actions = require("telescope-live-grep-args.actions")
 local cmp = require('cmp')
+local autopair = require('nvim-autopairs')
+-- If you want insert `(` after select function or method item
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp = require('cmp')
+
+telescope.setup {
+    defaults = {
+        mappings = {
+            i = {
+                ["<C-h>"] = "which_key"
+            }
+        }
+    },
+    pickers = {
+    },
+    extensions = {
+        live_grep_args = {
+            auto_quoting = true, -- enable/disable auto-quoting
+            -- define mappings, e.g.
+        }
+    }
+}
 
 cmp.setup({
     sources = cmp.config.sources(
@@ -88,3 +81,15 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+
+
+autopair.setup({
+    disable_filetype = { "TelescopePrompt", "vim" },
+})
+
+
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
+

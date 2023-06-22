@@ -10,7 +10,6 @@ lspconfig.rust_analyzer.setup {
     ['rust-analyzer'] = {},
   },
 }
-lspconfig.clangd.setup{}
 
 
 -- after the language server attaches to the current buffer
