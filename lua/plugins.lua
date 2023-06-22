@@ -13,6 +13,7 @@ return require('packer').startup(function(use)
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "neovim/nvim-lspconfig",
+        "simrat39/rust-tools.nvim"
     }
     use {'akinsho/bufferline.nvim', 
             tag = "*", 
@@ -27,6 +28,7 @@ return require('packer').startup(function(use)
             }
         },
     }
+    use{"nvim-lua/popup.nvim"}
     use {
         "windwp/nvim-autopairs",
     }

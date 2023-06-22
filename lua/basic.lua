@@ -1,6 +1,6 @@
 local vopt = vim.opt
 local vmap = vim.keymap
-local silent_opt = {silent = true}
+local silent_opt = {noremap=true, silent = true}
 
 -- View Setting
 vopt.mouse  = 'a'
@@ -41,6 +41,10 @@ vmap.set({'n', 'v'}, 'Y', '"+Y', silent_opt)
 
 -- init lua
 vmap.set('n', '<leader>it','<cmd>e ~/.config/nvim/init.lua<cr>',silent_opt)
+
+-- rust-tools
+vmap.set('n', '<space>ha', '<cmd>RustHoverActions<cr>', silent_opt)
+vmap.set('n', '<space>ha', '<cmd>RustCodeAction<cr>', silent_opt)
 
 -- telescope
 local builtin = require('telescope.builtin')
