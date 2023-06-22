@@ -41,11 +41,16 @@ return require('packer').startup(function(use)
         require("nvim-tree").setup {}
       end
     }
-
     -- auto complete
     use "hrsh7th/cmp-buffer"
     use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/cmp-path"
     use "hrsh7th/cmp-cmdline"
     use "hrsh7th/nvim-cmp"
+
+    use{
+        "L3MON4D3/LuaSnip",
+        tag = "v<CurrentMajor>.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        run = "make install_jsregexp"
+    }
 end)

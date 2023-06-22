@@ -2,7 +2,13 @@ local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 local rt = require("rust-tools")
 local lspconfig = require("lspconfig")
+local lsp_capabilites = require("cmp_nvim_lsp").default_capabilities()
 -- after the language server attaches to the current buffer
+
+local function on_attach(client, buffer)
+  -- This callback is called when the LSP is atttached/enabled for this buffer
+  -- we could set keymaps related to LSP, etc here.
+end
 
 local rt_opts = {
   -- rust-tools options
@@ -40,21 +46,27 @@ local rt_opts = {
         backend = 'x11',
         output = nil,
         full = true,
-    },
+      },
     },
     server = {
+        -- on_attach is a callback called when the language server attachs to the buffer
         on_attach = on_attach,
         standalone = true,
         settings = {
           ['rust-analyzer'] = {
             checkOnSave = {
-              enable = false,
+              comment = "clippy",
             },
-            inlayHints = {
-              lifetimeElisionHints = {
+            diagnostics = {
                 enable = true,
-                useParameterNames = true,
-              },
+                enableExperimental = true,
+            },
+            capabilites = lsp_capabilites,
+            inlayHints = {
+                lifetimeElisionHints = {
+                    enable = true,
+                    useParameterNames = true,
+                },
             },
           },
         },
@@ -85,6 +97,43 @@ mason_lspconfig.setup{
     ensure_installed = { "lua_ls", "rust_analyzer", "clangd", "pyright"},
 }
 -- Setup language servers.
-lspconfig['rust_analyzer'].setup {
+lspconfig['pyright'].setup {
+    capabilites = lsp_capabilites
+}
+lspconfig['lua_ls'].setup {
+    capabilites = lsp_capabilites
 }
 rt.setup(rt_opts)
+
+-- LSP Diagnostics Options Setup 
+local sign = function(opts)
+  vim.fn.sign_define(opts.name, {
+    texthl = opts.name,
+    text = opts.text,
+    numhl = ''
+  })
+end
+
+sign({name = 'DiagnosticSignError', text = 'E'})
+sign({name = 'DiagnosticSignWarn', text = ''})
+sign({name = 'DiagnosticSignHint', text = 'H'})
+sign({name = 'DiagnosticSignInfo', text = ''})
+
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    update_in_insert = true,
+    underline = true,
+    severity_sort = false,
+    float = {
+        border = 'rounded',
+        source = 'always',
+        header = '',
+        prefix = '',
+    },
+})
+
+vim.cmd([[
+set signcolumn=yes
+autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+]])

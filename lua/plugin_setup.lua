@@ -3,8 +3,26 @@ local lga_actions = require("telescope-live-grep-args.actions")
 local cmp = require('cmp')
 local autopair = require('nvim-autopairs')
 -- If you want insert `(` after select function or method item
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-local cmp = require('cmp')
+-- luasnip
+local ls = require('luasnip')
+local types = require('luasnip.util.types')
+ls.config.set_config({
+    history = true,
+    enable_autosnippets = true,
+    updateevents = 'TextChanged,TextChangedI',
+    ext_opts = {
+      [types.choiceNode] = {
+        active = {
+          virt_text = { { '<- choiceNode', 'Comment' } },
+        },
+      },
+    },
+})
+require('luasnip.loaders.from_lua').lazy_load({ paths = vim.fn.stdpath('config') .. '/snippets' })
+require('luasnip.loaders.from_vscode').lazy_load()
+require('luasnip.loaders.from_vscode').lazy_load({
+    paths = { './snippets/' },
+})
 
 telescope.setup {
     defaults = {
@@ -25,15 +43,18 @@ telescope.setup {
 }
 
 cmp.setup({
-    sources = cmp.config.sources(
-        {
-            {name = 'nvim_lsp'},
-        },
-        {
-            {name = 'path'},
-        },
-        {
-            {name = 'buffer',
+    snippet = {
+      expand = function(args)
+        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+       require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      end,
+    },
+    sources = cmp.config.sources({
+        {name = 'nvim_lsp'},
+        {name = 'path'},
+        {name = 'buffer',
               option = {
                 get_bufnrs = function()
                   local bufs = {}
@@ -43,12 +64,28 @@ cmp.setup({
                   return vim.tbl_keys(bufs)
                 end
               }
-            },
-        }
-    ),
+        },
+        {name = 'luasnip'},
+    }),
     mapping = cmp.mapping.preset.insert({
-        ["<Tab>"] = cmp.mapping.select_next_item(),
-        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif ls.expand_or_jumpable() then
+            ls.expand_or_jump()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif ls.jumpable(-1) then
+            ls.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
@@ -86,10 +123,3 @@ cmp.setup.cmdline(':', {
 autopair.setup({
     disable_filetype = { "TelescopePrompt", "vim" },
 })
-
-
-cmp.event:on(
-  'confirm_done',
-  cmp_autopairs.on_confirm_done()
-)
-
