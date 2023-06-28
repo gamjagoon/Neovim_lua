@@ -19,6 +19,8 @@ vopt.list = true
 vopt.clipboard = "unnamedplus"
 vopt.tags = {"./tags"}
 
+
+
 -- Key Binding
 vmap.set('n', 'cb', '<cmd>bn<bar>bd#<cr><cmd>bp<cr>', silent_opt)
 
@@ -84,3 +86,11 @@ vim.keymap.set('n', '<space>9', '<cmd>BufferLineGoToBuffer 9<cr>', {})
 -- highlight
 vim.cmd([[set cursorline]])
 vim.cmd([[hi LineNr ctermfg=Red]])
+
+if vim.g.neovide then
+    -- vim.o.guifont = "FiraCode Nerd Font:20"
+    vim.o.guifont = "Hack Nerd Font:h18"
+    vim.g.neovide_hide_mouse_when_typing = false
+    vim.g.neovide_fullscreen = false
+    vim.g.neovide_remember_window_size = true
+end
