@@ -53,4 +53,9 @@ return require('packer').startup(function(use)
         tag = "v<CurrentMajor>.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
         run = "make install_jsregexp"
     }
+
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    }
 end)

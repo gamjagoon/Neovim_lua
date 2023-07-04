@@ -50,7 +50,10 @@ local rt_opts = {
     },
     server = {
         -- on_attach is a callback called when the language server attachs to the buffer
-        on_attach = on_attach,
+        on_attach = function (_, bufnr)
+          vim.keymap.set("n", "<space>ha", rt.hover_actions.hover_actions, { buffer = bufnr })
+          vim.keymap.set("n", "<space>ca", rt.code_action_group.code_action_group, { buffer = bufnr })
+        end,
         standalone = true,
         settings = {
           ['rust-analyzer'] = {

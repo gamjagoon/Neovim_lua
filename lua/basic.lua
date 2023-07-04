@@ -45,8 +45,8 @@ vmap.set({'n', 'v'}, 'Y', '"+Y', silent_opt)
 vmap.set('n', '<leader>it','<cmd>e ~/.config/nvim/init.lua<cr>',silent_opt)
 
 -- rust-tools
-vmap.set('n', '<space>ha', '<cmd>RustHoverActions<cr>', silent_opt)
-vmap.set('n', '<space>ha', '<cmd>RustCodeAction<cr>', silent_opt)
+--vmap.set('n', '<space>ha', '<cmd>RustHoverActions<cr>', silent_opt)
+--vmap.set('n', '<space>ca', '<cmd>RustCodeAction<cr>', silent_opt)
 
 -- telescope
 local builtin = require('telescope.builtin')
@@ -89,7 +89,11 @@ vim.cmd([[hi LineNr ctermfg=Red]])
 
 if vim.g.neovide then
     -- vim.o.guifont = "FiraCode Nerd Font:20"
-    vim.o.guifont = "Hack Nerd Font:h18"
+    if vim.loop.os_uname().sysname == "Darwin" then
+        vim.o.guifont = "Hack Nerd Font:h16"
+    else
+        vim.o.guifont = "Hack Nerd Font:h18"
+    end
     vim.g.neovide_hide_mouse_when_typing = false
     vim.g.neovide_fullscreen = false
     vim.g.neovide_remember_window_size = true
