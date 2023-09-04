@@ -12,7 +12,6 @@ vopt.hlsearch = true
 vopt.wrap = false
 vopt.tabstop = 4
 vopt.shiftwidth = 4
-vopt.scrolloff = 20
 vopt.expandtab = true
 vopt.listchars = {space='.', tab = '>-', eol = '$'}
 vopt.list = true
