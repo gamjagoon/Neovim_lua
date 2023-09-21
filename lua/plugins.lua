@@ -8,8 +8,8 @@ return require('packer').startup(function(use)
     -- Packer can manage itself
     use "wbthomason/packer.nvim"
     -- colorscheme
-    use 'navarasu/onedark.nvim'
     use 'folke/tokyonight.nvim'
+    use "loctvl842/monokai-pro.nvim"
     use {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",

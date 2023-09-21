@@ -13,7 +13,7 @@ vopt.wrap = false
 vopt.tabstop = 4
 vopt.shiftwidth = 4
 vopt.expandtab = true
-vopt.listchars = {space='.', tab = '>-', eol = '$'}
+vopt.listchars = {space='·', tab = '>-', eol = '$'}
 vopt.list = true
 vopt.clipboard = "unnamedplus"
 vopt.tags = {"./tags"}
