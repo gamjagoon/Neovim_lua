@@ -5,10 +5,6 @@ local lspconfig = require("lspconfig")
 local lsp_capabilites = require("cmp_nvim_lsp").default_capabilities()
 -- after the language server attaches to the current buffer
 
-local function on_attach(client, buffer)
-  -- This callback is called when the LSP is atttached/enabled for this buffer
-  -- we could set keymaps related to LSP, etc here.
-end
 
 local rt_opts = {
   -- rust-tools options
@@ -95,17 +91,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-mason.setup()
-mason_lspconfig.setup{
-    ensure_installed = { "lua_ls", "rust_analyzer", "clangd", "pyright"},
-}
+-- mason.setup()
 -- Setup language servers.
+
+-- python
+--[[
 lspconfig['pyright'].setup {
     capabilites = lsp_capabilites
 }
+]]--
+
 lspconfig['lua_ls'].setup {
     capabilites = lsp_capabilites
 }
+
+
 rt.setup(rt_opts)
 
 -- LSP Diagnostics Options Setup 
