@@ -12,7 +12,7 @@ local rt_opts = {
       executor = require('rust-tools/executors').termopen,
       on_initialized = nil,
       reload_workspace_from_cargo_toml = true,
-      hover_with_actions = true,
+      hover_with_actions = false,
       inlay_hints = {
         auto = true,
         only_current_line = false,
@@ -91,7 +91,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- mason.setup()
+mason.setup()
 -- Setup language servers.
 
 -- python
