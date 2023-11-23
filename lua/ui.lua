@@ -20,14 +20,13 @@ require("tokyonight").setup({
   dim_inactive = false, -- dims inactive windows
   on_highlights = function (hl, c)
       hl.StatusLine = {
-          bf = "#81abfd",
+          bg = "#81abfd",
           fg = "#3b4261"
       }
       hl.StatusLineNC = {
-          bf = "#455981",
+          bg = "#455981",
           fg = "#e5eeff"
       }
-    
   end
 })
 
